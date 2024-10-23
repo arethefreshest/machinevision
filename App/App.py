@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import StreamingResponse
 from dash import Dash, html
 import cv2
+from dash.dependencies import Output, Input
+import base64
 
 # Initialize FastAPI application
 fastapi_app = FastAPI()
@@ -59,12 +61,6 @@ dash_app.layout = html.Div([
 # Mount the Dash app to FastAPI using WSGIMiddleware
 fastapi_app.mount("/", WSGIMiddleware(dash_app.server))
 
-if __name__ == '__main__':
-    # Check if we need to restart with Uvicorn to enable reloading
-    if "uvicorn" not in sys.argv[0]:
-        # Run Uvicorn as a subprocess with reload enabled
-        subprocess.run(["uvicorn", "App.App:fastapi_app", "--host", "0.0.0.0", "--port", "8000", "--reload"])
-    else:
-        # We are already running under Uvicorn, start normally
-        import uvicorn
-        uvicorn.run(fastapi_app, host="0.0.0.0", port=8000)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("App:fastapi_app", host="0.0.0.0", port=8000, reload=True)
