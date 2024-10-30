@@ -1,0 +1,17 @@
+# Web framework
+fastapi
+uvicorn
+dash
+
+# Computer Vision
+opencv-python-headless
+ultralytics
+easyocr
+
+# Data processing
+numpy
+pandas
+
+# Visualization
+matplotlib
+seaborn
