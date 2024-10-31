@@ -1,0 +1,33 @@
+# Dataset path (relative to project root)
+path: ../../data/dataset
+train: images/train
+val: images/val
+test: images/test
+
+# Classes for sign detection only
+nc: 1
+names: ['speed_limit']
+
+# Training parameters
+epochs: 100
+batch: 16
+imgsz: 640
+
+# Model parameters
+model: yolo11n
+pretrained: True
+
+# Augmentation
+hsv_h: 0.015 # HSV hue
+hsv_s: 0.7 # HSV saturation
+hsv_v: 0.4 # HSV value
+degrees: 0.0 # Rotation (+/- deg)
+translate: 0.1 # Translation (fraction)
+scale: 0.5 # Scale (+/- gain)
+shear: 0.0 # Shear (+/- deg)
+perspective: 0.0 # Perspective (+/- fraction)
+flipud: 0.0 # Flip up-down (probability)
+fliplr: 0.5 # Flip left-right (probability)
+mosaic: 1.0 # Mosaic (probability)
+mixup: 0.0 # Mixup (probability)
+copy_paste: 0.0 # Copy paste (probability)

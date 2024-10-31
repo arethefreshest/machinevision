@@ -1,0 +1,46 @@
+# Dataset path (relative to project root)
+path: ../../data/dataset
+train: images/train
+val: images/val
+test: images/test
+
+# Classes for specific speed limits
+nc: 8  # number of classes
+names: [
+    'speed_30',
+    'speed_40',
+    'speed_50',
+    'speed_60',
+    'speed_70',
+    'speed_80',
+    'speed_100',
+    'speed_120'
+]
+
+# Training parameters
+epochs: 100
+batch: 16
+imgsz: 640
+
+# Model parameters
+model: yolo11n  # Use nano model for faster training
+pretrained: true  # Use pretrained weights
+
+# Augmentation
+hsv_h: 0.015  # HSV-Hue augmentation
+hsv_s: 0.7    # HSV-Saturation augmentation
+hsv_v: 0.4    # HSV-Value augmentation
+degrees: 0    # Rotation (+/- deg)
+translate: 0.1 # Translation (+/- fraction)
+scale: 0.5    # Scale (+/- gain)
+shear: 0.0    # Shear (+/- deg)
+perspective: 0.0  # Perspective (+/- fraction), 0.0=none, 0.5=moderate
+flipud: 0.0   # Flip up-down (probability)
+fliplr: 0.5   # Flip left-right (probability)
+mosaic: 1.0   # Mosaic augmentation (probability)
+mixup: 0.0    # Mixup augmentation (probability)
+copy_paste: 0.0  # Copy-paste augmentation (probability)
+
+# Validation
+validation: true  # Validate during training
+save: true  # Save checkpoints

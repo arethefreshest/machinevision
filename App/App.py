@@ -8,6 +8,7 @@ from dash import Dash, html
 import cv2
 from dash.dependencies import Output, Input
 import base64
+from core.yolo_detector import SingleClassDetector, MultiClassDetector
 
 # Initialize FastAPI application
 fastapi_app = FastAPI()
@@ -61,6 +62,27 @@ dash_app.layout = html.Div([
 # Mount the Dash app to FastAPI using WSGIMiddleware
 fastapi_app.mount("/", WSGIMiddleware(dash_app.server))
 
+def train_models():
+    # Train both approaches
+    single_class = SingleClassDetector()
+    multi_class = MultiClassDetector()
+    
+    print("Training single-class detector...")
+    single_results = single_class.train(epochs=100)
+    
+    print("Training multi-class detector...")
+    multi_results = multi_class.train(epochs=100)
+    
+    return single_results, multi_results
+
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("App:fastapi_app", host="127.0.0.1", port=8000, reload=True)
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train', action='store_true', help='Train models')
+    args = parser.parse_args()
+    
+    if args.train:
+        train_models()
+    else:
+        import uvicorn
+        uvicorn.run("App:fastapi_app", host="127.0.0.1", port=8000, reload=True)
