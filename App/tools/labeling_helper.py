@@ -6,7 +6,8 @@ import os
 
 class SpeedLimitLabeler:
     def __init__(self):
-        self.base_dir = Path(__file__).parent.parent
+        # Adjust the base directory to align with dataset location
+        self.base_dir = Path(__file__).resolve().parents[2]  # Go up two levels to reach 'autoticket'
         self.dataset_dir = self.base_dir / 'data' / 'dataset'
         self.classes = ['20', '30', '50', '60', '70', '80', '100']
         self.label_studio_port = 8080
@@ -44,7 +45,7 @@ class SpeedLimitLabeler:
         print("1. Open your browser at: http://localhost:8080")
         print(f"2. Create a new project named 'speed_limit_{speed_limit}'")
         print("3. Choose 'Object Detection with Bounding Boxes'")
-        print(f"4. Import images from: {self.dataset_dir/'images'/'train'/speed_limit}")
+        print(f"4. Import images from: {train_dir}")
         print("5. Use the following Labeling Interface configuration:")
         print(labeling_config)
         print("\nAfter labeling, export labels in YOLO format and save to:")
