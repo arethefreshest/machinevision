@@ -9,6 +9,8 @@ import cv2
 from dash.dependencies import Output, Input
 import base64
 from core.yolo_detector import SingleClassDetector, MultiClassDetector
+from tools.model_tester import ModelTester
+from tools.dataset_validator import DatasetValidator
 
 # Initialize FastAPI application
 fastapi_app = FastAPI()
@@ -79,10 +81,29 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--train', action='store_true', help='Train models')
+    parser.add_argument('--test', action='store_true', help='Test models')
+    parser.add_argument('--validate-dataset', action='store_true', help='Validate dataset')
     args = parser.parse_args()
+    
     
     if args.train:
         train_models()
+    elif args.test:
+        tester = ModelTester()
+        avg_fps = tester.test_on_video('webcam')
+        print(f"Average FPS: {avg_fps:.2f}")
+    elif args.validate_dataset:
+        validator = DatasetValidator('data/dataset')
+        issues = validator.validate_dataset()
+        if issues:
+            print("Dataset issues found:")
+            for issue in issues:
+                print(f"- {issue}")
+        else:
+            print("Dataset validation passed!")
     else:
         import uvicorn
         uvicorn.run("App:fastapi_app", host="127.0.0.1", port=8000, reload=True)
+
+
+

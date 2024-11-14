@@ -2,19 +2,18 @@
 path: ../../data/dataset
 train: images/train
 val: images/val
-test: images/test
+#test: images/test # Add test set later if needed
 
 # Classes for specific speed limits
-nc: 8  # number of classes
+nc: 7  # number of classes
 names: [
-    'speed_30',
-    'speed_40',
-    'speed_50',
-    'speed_60',
-    'speed_70',
-    'speed_80',
-    'speed_100',
-    'speed_120'
+    '20kmt',
+    '30kmt',
+    '50kmt',
+    '60kmt',
+    '70kmt',
+    '80kmt',
+    '100kmt'
 ]
 
 # Training parameters

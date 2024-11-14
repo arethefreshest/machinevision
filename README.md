@@ -2,6 +2,8 @@
 
 Real-time speed limit sign detection system using YOLO and EasyOCR, with a web interface built using FastAPI and Dash.
 
+---
+
 ## Development Environment Setup
 
 ### Option 1: Using Docker (Recommended)
@@ -95,6 +97,52 @@ autoticket/
 ├── environment.yml          # Conda environment file
 └── README.md
 ```
+
+## Dataset Preparation and Labeling
+
+### Step 1: Organize Dataset by Speed Limit
+Organize raw images by speed limit to simplify labeling. This step will place images into folders by speed limit under `data/dataset/images/train/[speed_limit]`.
+```bash
+python App/tools/organize_dataset.py
+```
+
+When prompted, enter each speed limit (e.g., 20, 30, 50). You can leave the prompt blank to process all speed limits at once.
+
+### Step 2: Trim Dataset for Efficient Labeling
+Limit the number of images per base (such as different sizes of the same sign) to reduce duplicates and make labeling manageable.
+```bash
+python App/tools/dataset_prep.py
+```
+
+This step:
+- Groups images by base (e.g., 00000, 00001) and retains a specified number per group.
+- Splits data into train and val folders under `data/dataset/images`.
+
+### Step 3: Start Labeling with Label Studio
+Use Label Studio to label the organized dataset. Label Studio will allow you to draw bounding boxes around speed limit signs for each speed category.
+
+1. Start Label Studio:
+   ```bash
+   python App/tools/labeling_helper.py
+   ```
+   
+2. Open Label Studio at http://localhost:8080.
+3. For each speed limit:
+   - Create a Project for the speed limit category and import images from `data/dataset/images/train/[speed_limit]`.
+   - Label signs with bounding boxes using the labels `20kmt`, `30kmt`, etc., for each speed limit.
+4. **Export the labeled data** in YOLO format after completing each project, saving the labels in `data/dataset/labels/train/[speed_limit]`.
+
+### Step 4: Validate Dataset
+Validate the dataset to ensure that each image has an associated label file and that bounding box values are within the acceptable range. This step helps catch any labeling errors before training.
+```bash
+python App/tools/dataset_validator.py
+```
+
+If any issues are detected, the tool will output specific files with missing or incorrect labels.
+
+---
+
+After completing the steps, your dataset should be ready for training.
 
 ## Troubleshooting
 

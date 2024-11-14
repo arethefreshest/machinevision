@@ -3,16 +3,18 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.11
+  - python=3.10
   - pip
-  - opencv
   - numpy
-  - pandas
+  - opencv
   - matplotlib
   - seaborn
+  - fastapi
+  - uvicorn
+  - dash
   - pip:
-    - fastapi
-    - uvicorn
-    - dash
     - ultralytics
-    - easyocr
+    - label-studio
+    - label-studio-sdk
+    - tqdm
+    - python-multipart
